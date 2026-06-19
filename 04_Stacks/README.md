@@ -8,8 +8,12 @@ This repository contains robust implementations of the **Stack** data structure 
    - [Array-Based Stack](#1-array-based-stack)
    - [Linked List-Based Stack](#2-linked-list-based-stack)
    - [Min Stack (O(1) GetMin)](#3-min-stack-o1-getmin)
-3. [Operations & Complexities](#operations--complexities)
-4. [How to Run](#how-to-run)
+3. [Monotonic Stacks](#monotonic-stacks)
+   - [Monotonic Increasing Stack](#1-monotonic-increasing-stack)
+   - [Monotonic Decreasing Stack](#2-monotonic-decreasing-stack)
+   - [Core Applications (NGE, NSE, PGE, PSE)](#core-applications-nge-nse-pge-pse)
+4. [Operations & Complexities](#operations--complexities)
+5. [How to Run](#how-to-run)
 
 ---
 
@@ -49,17 +53,55 @@ A **Stack** is a linear data structure that follows the **LIFO (Last-In, First-O
 
 ---
 
-## Operations & Complexities
+## Monotonic Stacks
+- **File:** `Monotonic_Stack_Problems.cpp`
+- **Concept:** A **Monotonic Stack** is a stack whose elements are maintained in a specific sorted order (increasing or decreasing) from bottom to top. It is widely used to solve range queries, next/previous element queries, and histogram/building problems in linear **O(N)** time instead of O(N²).
 
-| Operation | Array-Based Stack | Linked List-Based Stack | Min Stack (Linked List) |
-| :--- | :--- | :--- | :--- |
-| **Push** | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Pop** | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Top / Peek** | $O(1)$ | $O(1)$ | $O(1)$ |
-| **GetMin** | N/A | N/A | $O(1)$ |
-| **Size** | $O(1)$ | $O(N)$ | N/A |
-| **Space Complexity** | $O(\text{MAX\_SIZE})$ | $O(N)$ (Dynamic) | $O(N)$ (Dynamic) |
+### 1. Monotonic Increasing Stack
+- **Definition:** Elements from the bottom of the stack to the top are in strictly/non-strictly **increasing** order.
+- **Maintenance Rule:** Before pushing a new element `x`, pop all elements that are **greater than** (or equal to) `x`.
+- **Snippet:**
+  ```cpp
+  while (!st.empty() && st.top() >= x) {
+      st.pop();
+  }
+  st.push(x);
+  ```
+
+### 2. Monotonic Decreasing Stack
+- **Definition:** Elements from the bottom of the stack to the top are in strictly/non-strictly **decreasing** order.
+- **Maintenance Rule:** Before pushing a new element `x`, pop all elements that are **smaller than** (or equal to) `x`.
+- **Snippet:**
+  ```cpp
+  while (!st.empty() && st.top() <= x) {
+      st.pop();
+  }
+  st.push(x);
+  ```
+
+### Core Applications (NGE, NSE, PGE, PSE)
+
+By combining **traversal direction** and **stack monotonicity**, we can solve the four classic element-finding problems in $O(N)$ time:
+
+| Problem | Traversal | Stack Type | Pop Condition | Explanation |
+| :--- | :--- | :--- | :--- | :--- |
+| **Next Greater Element (NGE)** | Right to Left | Monotonic Decreasing | `st.top() <= arr[i]` | Finds the first element to the right that is strictly greater. |
+| **Next Smaller Element (NSE)** | Right to Left | Monotonic Increasing | `st.top() >= arr[i]` | Finds the first element to the right that is strictly smaller. |
+| **Previous Greater Element (PGE)** | Left to Right | Monotonic Decreasing | `st.top() <= arr[i]` | Finds the first element to the left that is strictly greater. |
+| **Previous Smaller Element (PSE)** | Left to Right | Monotonic Increasing | `st.top() >= arr[i]` | Finds the first element to the left that is strictly smaller. |
 
 ---
 
+## Operations & Complexities
+
+| Operation / Concept | Array Stack | Linked List Stack | Min Stack | Monotonic Stack Applications |
+| :--- | :--- | :--- | :--- | :--- |
+| **Push** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ (amortized) |
+| **Pop** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ (amortized) |
+| **Top / Peek** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
+| **GetMin** | N/A | N/A | $O(1)$ | N/A |
+| **Time Complexity** | $O(1)$ per op | $O(1)$ per op | $O(1)$ per op | **$O(N)$** overall for $N$ elements |
+| **Space Complexity** | $O(\text{MAX\_SIZE})$ | $O(N)$ (Dynamic) | $O(N)$ (Dynamic) | $O(N)$ (Stack storage) |
+
+---
 
