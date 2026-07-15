@@ -7,7 +7,7 @@
 3. Copy back into the original array.
 
 ### Steps :
-1. Reduce rotations using `k = k % n`.
+1. Reduce rotations using `k = k % n`
 2. Copy elements from `k` to `n-1`.
 3. Copy first `k` elements to the end.
 4. Copy result back.

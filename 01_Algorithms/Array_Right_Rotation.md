@@ -73,6 +73,7 @@ void Right_Rotation(vector<int>& a, int k) {
     for (int i = 0; i < n; i++) {
         a[i]= t[i];
     }
+    
 }
 
 //Right Rotatiion With No Extra Spaces
